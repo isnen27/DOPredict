@@ -16,32 +16,41 @@ with st.form("prediction_form"):
     st.header("Enter Student Details")
 
     # Input fields
-    ccourse = st.number_input("1_Ccourse (Value between 0 and 1):", min_value=0.0, max_value=1.0, step=0.01)
-    ccourse_good = st.number_input("2_CCourse_good (Value between 0 and 1):", min_value=0.0, max_value=1.0, step=0.01)
-    toefl_score = st.number_input("3_TOEFL_score:", min_value=0.0, step=0.1)
-    college_time = st.number_input("4_College_time (Hours per week):", min_value=0.0, step=0.1)
+    total_sks = st.number_input("1_Ccourse (Total SKS taken):", min_value=0, step=1)
+    good_sks = st.number_input("2_CCourse_good (Total SKS with good grades):", min_value=0, step=1)
+    toefl_score = st.number_input("3_TOEFL_score (TOEFL score between 200 and 680):", min_value=200, max_value=680, step=1)
+    college_time = st.number_input("4_College_time (Study duration in semesters):", min_value=0, step=1)  # Updated to semesters
     gpa = st.number_input("5_GPA (Value between 0 and 4):", min_value=0.0, max_value=4.0, step=0.01)
-    academic_leave = st.number_input("6_Academic_Leave (Number of times):", min_value=0.0, step=0.1)
+    academic_leave = st.number_input("6_Academic_Leave (Number of semesters of leave):", min_value=0, step=1)
 
-    domicile = st.selectbox("7_domicile:", ["Urban", "Rural"])
-    work = st.selectbox("8_work:", ["Yes", "No"])
-    live_with_family = st.selectbox("9_live_with_family:", ["Yes", "No"])
+    # Domicile selection updated
+    domicile = st.selectbox("7_domicile (Choose your domicile):", ["Bekasi", "Bogor", "Depok", "Jakarta", "Tangerang"])
+    
+    work = st.selectbox("8_work (Do you work?):", ["Yes", "No"])
+    live_with_family = st.selectbox("9_live_with_family (Do you live with your family?):", ["Yes", "No"])
 
     # Submit button
     submitted = st.form_submit_button("Predict")
 
 if submitted:
     # Encode categorical features
-    domicile_encoded = 1 if domicile == "Urban" else 0
-    work_encoded = 1 if work == "Yes" else 0
-    live_with_family_encoded = 1 if live_with_family == "Yes" else 0
+    domicile_map = {
+        "Bekasi": 1,
+        "Bogor": 2,
+        "Depok": 3,
+        "Jakarta": 4,
+        "Tangerang": 5
+    }
+    domicile_encoded = domicile_map[domicile]
+    work_encoded = 2 if work == "Yes" else 1
+    live_with_family_encoded = 1 if live_with_family == "Yes" else 2
 
     # Create a DataFrame for the input data
     input_data = pd.DataFrame({
-        "1_Ccourse": [ccourse],
-        "2_CCourse_good": [ccourse_good],
+        "1_Ccourse": [total_sks],
+        "2_CCourse_good": [good_sks],
         "3_TOEFL_score": [toefl_score],
-        "4_College_time": [college_time],
+        "4_College_time": [college_time],  # Updated to semesters
         "5_GPA": [gpa],
         "6_Academic_Leave": [academic_leave],
         "7_domicile": [domicile_encoded],
