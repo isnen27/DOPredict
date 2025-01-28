@@ -16,18 +16,18 @@ with st.form("prediction_form"):
     st.header("Enter Student Details")
 
     # Input fields
-    total_sks = st.number_input("1_Ccourse (Total SKS taken):", min_value=0, step=1)
-    good_sks = st.number_input("2_CCourse_good (Total SKS with good grades):", min_value=0, step=1)
-    toefl_score = st.number_input("3_TOEFL_score (TOEFL score between 200 and 680):", min_value=200, max_value=680, step=1)
-    college_time = st.number_input("4_College_time (Study duration in semesters):", min_value=0, step=1)  # Updated to semesters
-    gpa = st.number_input("5_GPA (Value between 0 and 4):", min_value=0.0, max_value=4.0, step=0.01)
-    academic_leave = st.number_input("6_Academic_Leave (Number of semesters of leave):", min_value=0, step=1)
+    total_sks = st.number_input("Total Course Credits taken:", min_value=0, step=1)
+    good_sks = st.number_input("Total Course Credits with good grades:", min_value=0, step=1)
+    toefl_score = st.number_input("TOEFL score between 200 and 680:", min_value=200, max_value=680, step=1)
+    college_time = st.number_input("Study duration in semesters:", min_value=0, step=1)  # Updated to semesters
+    gpa = st.number_input("GPA (Value between 0 and 4):", min_value=0.0, max_value=4.0, step=0.01)
+    academic_leave = st.number_input("Number of semesters of leave:", min_value=0, step=1)
 
     # Domicile selection updated
-    domicile = st.selectbox("7_domicile (Choose your domicile):", ["Bekasi", "Bogor", "Depok", "Jakarta", "Tangerang"])
+    domicile = st.selectbox("Choose your domicile:", ["Bekasi", "Bogor", "Depok", "Jakarta", "Tangerang"])
     
-    work = st.selectbox("8_work (Do you work?):", ["Yes", "No"])
-    live_with_family = st.selectbox("9_live_with_family (Do you live with your family?):", ["Yes", "No"])
+    work = st.selectbox("Do you work?:", ["Yes", "No"])
+    live_with_family = st.selectbox("Do you live with your family?:", ["Yes", "No"])
 
     # Submit button
     submitted = st.form_submit_button("Predict")
